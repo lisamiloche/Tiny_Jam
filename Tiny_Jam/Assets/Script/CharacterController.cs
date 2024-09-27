@@ -23,17 +23,21 @@ public class CharacterController : MonoBehaviour
 
     [Header("Slope")]
     [SerializeField] float _slopeDetectOffset;
+    [SerializeField] PhysicsMaterial2D _physicsFriction;
+    [SerializeField] PhysicsMaterial2D _physicsNoFriction;
 
     Vector2 _inputs;
     bool _inputJump;
     Rigidbody2D _rb;
     float _timerNoJump;
     bool _isOnSlope;
+    Collider2D _collider;
 
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<Collider2D>();
     }
 
     private void Update()
@@ -46,6 +50,7 @@ public class CharacterController : MonoBehaviour
         HandleMovements();
         HandleGrounded();
         HandleJump();
+        HandleSlope();
     }
 
     void HandleInputs()
@@ -89,7 +94,15 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-   /* void HandleSlope()
+
+    private void OnDrawGizmos()
+    {
+        Vector2 point = transform.position + Vector3.up * _groundOffset;
+        Gizmos.DrawSphere(point, _groundRadius);
+    }
+
+
+    void HandleSlope()
     {
         Vector3 origin = transform.position + Vector3.up * _groundOffset;
         RaycastHit2D[] _hitResults = new RaycastHit2D[2];
@@ -102,8 +115,14 @@ public class CharacterController : MonoBehaviour
 
         _isOnSlope = (slopeRight || slopeLeft) && (slopeRight == false || slopeLeft == false);
 
+
         if (Mathf.Abs(_inputs.x) < 00.1f && (slopeLeft || slopeRight))
         {
+            _collider.sharedMaterial = _physicsFriction;
         }
-    }*/
+        else
+        {
+            _collider.sharedMaterial = _physicsNoFriction;
+        }
+    }
 }
