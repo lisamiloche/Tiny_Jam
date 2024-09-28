@@ -32,7 +32,8 @@ public class CharacterController : MonoBehaviour
     float _timerNoJump;
     bool _isOnSlope;
     Collider2D _collider;
-
+    public bool _isLookingRight;
+    Vector2 _checkDirection;
 
     private void Start()
     {
@@ -43,6 +44,7 @@ public class CharacterController : MonoBehaviour
     private void Update()
     {
         HandleInputs();
+        CheckDirection();
     }
 
     private void FixedUpdate()
@@ -123,6 +125,27 @@ public class CharacterController : MonoBehaviour
         else
         {
             _collider.sharedMaterial = _physicsNoFriction;
+        }
+    }
+
+    void CheckDirection()
+    {
+        if (_inputs.x > 0)
+        {
+            _isLookingRight = true;
+            _checkDirection.x = _inputs.x;
+        }
+        else if (_inputs.x < 0)
+        {
+            _isLookingRight = false;
+            _checkDirection.x = _inputs.x;
+        }
+        else if (_inputs.x == 0)
+        {
+            if (_checkDirection.x > 0)
+                _isLookingRight = true;
+            else
+                _isLookingRight = false;
         }
     }
 }
