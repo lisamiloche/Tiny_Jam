@@ -7,10 +7,12 @@ public class MortalBlocks : MonoBehaviour
 {
     [SerializeField] List<GameObject> _mortalBlocks = new List<GameObject>();
     bool _isDeath = false;
+    [SerializeField] GameObject _script;
+    DefeatScreen _screen;
 
     void Start()
     {
-
+        _screen = _script.GetComponent<DefeatScreen>();
     }
 
     void Update()
@@ -20,7 +22,7 @@ public class MortalBlocks : MonoBehaviour
             //Instantiate(VFXDeath, position, rotation);
             //PlayAnimDeath
             //Delais
-            //Ouvrir page de défaite
+            _screen._defeatScreen.SetActive(true);
             Destroy(gameObject); // à changer
         }
     }

@@ -6,10 +6,8 @@ public class DestroyTemporaryBlocks : MonoBehaviour
 {
     [Header("Timer Before Destroy")]
     [SerializeField] float _timerDuration;
-    
     float _startTime;
-    public bool _isDestroyed = false;
-    
+
     void Start()
     { 
         _startTime = Time.time;

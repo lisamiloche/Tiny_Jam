@@ -98,4 +98,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timerDuration: 5
-  _isDestroyed: 0
+  _player: {fileID: 0}

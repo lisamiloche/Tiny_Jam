@@ -11,15 +11,13 @@ public class InstantiateTemporaryBlocks : MonoBehaviour
     [Header("Temporary Blocks")]
     [SerializeField] int _numberMaxOfBlocks;
     [SerializeField] float _blockSize;
+    public List<GameObject> _temporaryBlocksList = new List<GameObject>();
 
-    public int _numberOfActiveBlocks;
     CharacterController _characterController;
-
 
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
-        _numberOfActiveBlocks = 0;
     }
 
     void Update()
@@ -32,17 +30,17 @@ public class InstantiateTemporaryBlocks : MonoBehaviour
     {
         if (Input.GetKeyDown("e"))
         {
-            if (_numberOfActiveBlocks < _numberMaxOfBlocks)
+            if (_temporaryBlocksList.Count < _numberMaxOfBlocks)
             {
                 if (_characterController._isLookingRight == true)
                 {
                     Instantiate(gameObject, new Vector2(transform.position.x + _blockSize, transform.position.y), Quaternion.identity);
-                    _numberOfActiveBlocks++;
+                    _temporaryBlocksList.Add(gameObject);
                 }
                 else
                 {
                     Instantiate(gameObject, new Vector2(transform.position.x - _blockSize, transform.position.y), Quaternion.identity);
-                    _numberOfActiveBlocks++;
+                    _temporaryBlocksList.Add(gameObject);
                 }
             }
         }

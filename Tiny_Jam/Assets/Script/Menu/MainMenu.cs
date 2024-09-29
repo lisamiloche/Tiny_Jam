@@ -8,13 +8,12 @@ public class MainMenu : MonoBehaviour
     [Header("Reference To Windows")]
     [SerializeField] GameObject _mainMenu;
     [SerializeField] GameObject _credits;
-
+    
     private void Start()
     {
         _mainMenu.SetActive(true);
         _credits.SetActive(false);
     }
-
     public void OnClickLV01()
     {
         SceneManager.LoadScene("Lvl01");
