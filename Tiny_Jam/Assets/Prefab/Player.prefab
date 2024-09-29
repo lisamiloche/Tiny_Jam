@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8483494896374710310}
   - component: {fileID: 2138965957132754444}
   - component: {fileID: 2591254448065316953}
+  - component: {fileID: 334625910502403401}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -192,3 +193,16 @@ MonoBehaviour:
   _numberMaxOfBlocks: 2
   _blockSize: 1
   _numberOfActiveBlocks: 0
+--- !u!114 &334625910502403401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378556094754005044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ddfd9ac3d3b25a4eaffcfca508ad25d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mortalBlockPrefab: {fileID: 9030488178837870365, guid: 60e6c47e4a5c2d345b869e474b454624, type: 3}
