@@ -11,7 +11,7 @@ public class InstantiateTemporaryBlocks : MonoBehaviour
     [Header("Temporary Blocks")]
     [SerializeField] int _numberMaxOfBlocks;
     [SerializeField] float _blockSize;
-    public List<GameObject> _temporaryBlocksList = new List<GameObject>();
+    public int _numberOfActiveBlocks = 0;
 
     CharacterController _characterController;
 
@@ -26,22 +26,22 @@ public class InstantiateTemporaryBlocks : MonoBehaviour
         Spawner(_prefabBlock);
     }
 
-    void Spawner(GameObject gameObject)
+    void Spawner(GameObject Go)
     {
         if (Input.GetKeyDown("e"))
         {
-            if (_temporaryBlocksList.Count < _numberMaxOfBlocks)
+            if (_numberOfActiveBlocks < _numberMaxOfBlocks)
             {
                 if (_characterController._isLookingRight == true)
                 {
-                    Instantiate(gameObject, new Vector2(transform.position.x + _blockSize, transform.position.y), Quaternion.identity);
-                    _temporaryBlocksList.Add(gameObject);
+                    Instantiate(Go, new Vector2(transform.position.x + _blockSize, transform.position.y), Quaternion.identity);
+                    
                 }
                 else
                 {
-                    Instantiate(gameObject, new Vector2(transform.position.x - _blockSize, transform.position.y), Quaternion.identity);
-                    _temporaryBlocksList.Add(gameObject);
+                    Instantiate(Go, new Vector2(transform.position.x - _blockSize, transform.position.y), Quaternion.identity);
                 }
+                _numberOfActiveBlocks++;
             }
         }
     }

@@ -7,13 +7,16 @@ public class DestroyTemporaryBlocks : MonoBehaviour
     [Header("Timer Before Destroy")]
     [SerializeField] float _timerDuration;
     float _startTime;
+    [SerializeField] GameObject _player;
+    InstantiateTemporaryBlocks _instantiateBlocks;
 
     void Start()
-    { 
+    {
+        _player = GameObject.Find("Player");
+        _instantiateBlocks = _player.GetComponent<InstantiateTemporaryBlocks>();
         _startTime = Time.time;
     }
 
-    // Update is called once per frame
     void Update()
     {
         float elapsedTime = Time.time - _startTime;
@@ -21,6 +24,7 @@ public class DestroyTemporaryBlocks : MonoBehaviour
 
         if (remainingTime <= 0)
         {
+            _instantiateBlocks._numberOfActiveBlocks--;
             Destroy(gameObject);
         }
     }
