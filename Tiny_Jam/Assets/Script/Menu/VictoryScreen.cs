@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DefeatScreen : MonoBehaviour
+public class VictoryScreen : MonoBehaviour
 {
+
     string _currentSceneName;
-    int _index = 1;
-    [SerializeField] public GameObject _defeatScreen;
+    int _index;
+    [SerializeField] public GameObject _victoryScreen;
 
     void Start()
     {
         _currentSceneName = "Lvl0";
-        _defeatScreen.SetActive(false);
+        _index = 1;
+        _victoryScreen.SetActive(false);
     }
+
     public void ObClickMenu()
     {
         SceneManager.LoadScene("Menu");
@@ -22,5 +25,10 @@ public class DefeatScreen : MonoBehaviour
     public void OnClickReload()
     {
         SceneManager.LoadScene(_currentSceneName + _index);
+    }
+
+    public void OnClickNext()
+    {
+        SceneManager.LoadScene(_currentSceneName + (_index+1));
     }
 }

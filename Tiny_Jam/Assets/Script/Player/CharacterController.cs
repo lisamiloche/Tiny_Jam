@@ -13,8 +13,9 @@ public class CharacterController : MonoBehaviour
     [Header("GroundCheck")]
     [SerializeField] float _groundOffset;
     [SerializeField] float _groundRadius;
+    [SerializeField] Transform groundChecker;
     [SerializeField] LayerMask _groundLayer;
-    bool _isGrounded;
+    public bool _isGrounded;
 
     [Header("Jump")]
     [SerializeField] float _jumpForce;
@@ -25,6 +26,10 @@ public class CharacterController : MonoBehaviour
     [SerializeField] float _slopeDetectOffset;
     [SerializeField] PhysicsMaterial2D _physicsFriction;
     [SerializeField] PhysicsMaterial2D _physicsNoFriction;
+
+
+    //private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
+    //private Vector3 normalScale = new Vector3(1, 0.5f, 1);
 
     Vector2 _inputs;
     bool _inputJump;
@@ -72,11 +77,10 @@ public class CharacterController : MonoBehaviour
 
     void HandleGrounded()
     {
-        Vector2 point = transform.position + Vector3.up * _groundOffset;
         Collider2D[] _collidersGround = new Collider2D[2];
 
         bool currentGrounded =
-            Physics2D.OverlapCircleNonAlloc(point, _groundRadius, _collidersGround, _groundLayer) > 0; 
+            Physics2D.OverlapCircleNonAlloc(groundChecker.position, _groundRadius, _collidersGround, _groundLayer) > 0; 
         _isGrounded = currentGrounded;
     }
 
@@ -99,8 +103,7 @@ public class CharacterController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Vector2 point = transform.position + Vector3.up * _groundOffset;
-        Gizmos.DrawSphere(point, _groundRadius);
+        Gizmos.DrawSphere(groundChecker.position, _groundRadius);
     }
 
 
