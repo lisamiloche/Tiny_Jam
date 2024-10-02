@@ -37,13 +37,17 @@ public class CharacterController : MonoBehaviour
     float _timerNoJump;
     bool _isOnSlope;
     Collider2D _collider;
+    [SerializeField] Collider2D _playingZone;
     public bool _isLookingRight;
     Vector2 _checkDirection;
+    bool _canMove;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+
+        AudioManager.Instance.PlayMusic(0,true); //TEST PTDDRRRRR VOUS VOUS ETES FAITS AVOIR HEIN !!!!
     }
 
     private void Update()
@@ -58,6 +62,7 @@ public class CharacterController : MonoBehaviour
         HandleGrounded();
         HandleJump();
         HandleSlope();
+        RestrictToPlayingZone();
     }
 
     void HandleInputs()
@@ -151,4 +156,31 @@ public class CharacterController : MonoBehaviour
                 _isLookingRight = false;
         }
     }
+
+    void RestrictToPlayingZone()
+    {
+        Vector3 position = transform.position;
+        Bounds bounds = _playingZone.bounds;
+
+        if (position.x < bounds.min.x)
+        {
+            position.x = bounds.min.x;
+        }
+        else if (position.x > bounds.max.x)
+        {
+            position.x = bounds.max.x;
+        }
+
+        if (position.y < bounds.min.y)
+        {
+            position.y = bounds.min.y;
+        }
+        else if (position.y > bounds.max.y)
+        {
+            position.y = bounds.max.y;
+        }
+
+        transform.position = position;
+    }
+
 }
