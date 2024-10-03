@@ -10,15 +10,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2975068294317109247, guid: 467f887cef1f39b499f012f3feeea8ba, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.86384034
+      objectReference: {fileID: 0}
+    - target: {fileID: 2975068294317109247, guid: 467f887cef1f39b499f012f3feeea8ba, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.9318179
       objectReference: {fileID: 0}
     - target: {fileID: 2975068294317109247, guid: 467f887cef1f39b499f012f3feeea8ba, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.83
+      value: -1.0581
       objectReference: {fileID: 0}
     - target: {fileID: 2975068294317109247, guid: 467f887cef1f39b499f012f3feeea8ba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.82
+      value: 1.0579
       objectReference: {fileID: 0}
     - target: {fileID: 2975068294317109247, guid: 467f887cef1f39b499f012f3feeea8ba, type: 3}
       propertyPath: m_LocalPosition.z
@@ -98,4 +102,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timerDuration: 5
-  _remove: 0
+  _isDestroyed: 0
