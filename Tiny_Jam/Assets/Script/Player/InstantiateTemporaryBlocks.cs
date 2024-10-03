@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -65,6 +66,10 @@ public class InstantiateTemporaryBlocks : MonoBehaviour
                     Instantiate(_temporaryBlock, new Vector2(transform.position.x - _blockSize, transform.position.y + _blockSize/2), Quaternion.identity);
 
                 _numberOfActiveBlocks++;
+
+                //AudioManager.Instance.PlayMusic(1, false);
+                //AudioManager.Instance.SetMusicVolume(1.2f);
+
             }
         }
     }
