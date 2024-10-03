@@ -47,13 +47,13 @@ public class CharacterController : MonoBehaviour
     private void Awake()
     {
         _animManager = GetComponent<AnimManager>();
-        AudioManager.Instance.PlayMusic(0, true);
     }
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+        AudioManager.Instance.PlayMusic(0, true);
     }
 
     private void Update()
@@ -72,22 +72,18 @@ public class CharacterController : MonoBehaviour
         if (isRunning)
         {
             _animManager.PlayAnimation("player_run");
-            Debug.Log("Anim Run");
         } 
         else if (isJumping)
         { 
             _animManager.PlayAnimation("player_jump_up");
-            Debug.Log("Anim Saut up");
         }
         else if (isFalling)
         {
             _animManager.PlayAnimation("player_jump_down");
-            Debug.Log("Anim Saut down");
         }
         else
         {
             _animManager.PlayAnimation("player_idle");
-            Debug.Log("Anim Idle");
         }
     }
 
