@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 
 public class CharacterController : MonoBehaviour
 {
@@ -37,21 +38,60 @@ public class CharacterController : MonoBehaviour
     public bool _isLookingRight;
     Vector2 _checkDirection;
     bool _canMove;
+    AnimManager _animManager;
+
+    public bool isRunning = false;
+    public bool isJumping = false;
+    public bool isFalling = false;
+    
+    private void Awake()
+    {
+        _animManager = GetComponent<AnimManager>();
+        AudioManager.Instance.PlayMusic(0, true);
+    }
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
-
-        AudioManager.Instance.PlayMusic(0,true);
     }
+
 
     private void Update()
     {
         HandleInputs();
         CheckDirection();
+        PlayAnimation();
     }
-     
+
+    private void PlayAnimation()
+    {
+        _animManager.SetBool("isJumping", isJumping);
+        _animManager.SetBool("isFalling", isFalling);
+        _animManager.SetBool("isRunning", isRunning);
+
+        if (isRunning)
+        {
+            _animManager.PlayAnimation("player_run");
+            Debug.Log("Anim Run");
+        }
+        else if (isJumping)
+        { 
+            _animManager.PlayAnimation("player_jump_up");
+            Debug.Log("Anim Saut up");
+        }
+        else if (isFalling)
+        {
+            _animManager.PlayAnimation("player_jump_down");
+            Debug.Log("Anim Saut down");
+        }
+        else
+        {
+            _animManager.PlayAnimation("player_idle");
+            Debug.Log("Anim Idle");
+        }
+    }
+
     private void FixedUpdate()
     {
         HandleMovements();
@@ -71,9 +111,18 @@ public class CharacterController : MonoBehaviour
 
     void HandleMovements()
     {
-        var velocity = _rb.velocity;
-        Vector2 wantedvelocity = new Vector2(_inputs.x * _walkSpeed, velocity.y);
-        _rb.velocity = Vector2.MoveTowards(velocity, wantedvelocity, _acceleration);
+        if(Mathf.Abs(_inputs.x) > 0.1f)
+        {
+            var velocity = _rb.velocity;
+            Vector2 wantedvelocity = new Vector2(_inputs.x * _walkSpeed, velocity.y);
+            _rb.velocity = Vector2.MoveTowards(velocity, wantedvelocity, _acceleration);
+            
+            if(_isGrounded)
+                isRunning = true;
+        }
+        else
+            isRunning = false;
+        
     }
 
     void HandleGrounded()
@@ -90,15 +139,36 @@ public class CharacterController : MonoBehaviour
     {
         _timerNoJump -= Time.deltaTime;
 
-        if (_inputJump && _rb.velocity.y <= 0 && _isGrounded && _timerNoJump <= 0)
+        if (_isGrounded)
         {
-            _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
-            _timerNoJump = _timeMinBetweenJump;
+            isJumping = false;
+            isFalling = false;
+
+            if (_inputJump && _rb.velocity.y <= 0 && _timerNoJump <= 0)
+            {
+                Debug.Log("On saute");
+                _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+                _timerNoJump = _timeMinBetweenJump;
+                isJumping = true;
+            }
+        }
+        else
+        {
+            if (_rb.velocity.y < 0)
+            {
+                Debug.Log("On retombe");
+                isFalling = true;
+            }
+            else if (_rb.velocity.y > 0)
+            {
+                isJumping = true;
+                isFalling = false;
+            }
         }
 
-        if (_rb.velocity.y > _velocityFallMin)
-        { 
-                _rb.velocity = new Vector2(_rb.velocity.x, _velocityFallMin);
+        if (_rb.velocity.y < -_velocityFallMin)
+        {
+            _rb.velocity = new Vector2(_rb.velocity.x, -_velocityFallMin);
         }
     }
 
@@ -172,10 +242,6 @@ public class CharacterController : MonoBehaviour
         {
             position.y = bounds.min.y;
         }
-        /*else if (position.y > bounds.max.y)
-        {
-            position.y = bounds.max.y;
-        }*/
 
         transform.position = position;
     }

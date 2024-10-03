@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CorruptBlock : MonoBehaviour
 {
     [SerializeField] GameObject _corruptBlock;
     BoxCollider2D _collider;
     public bool _currupted = false;
+    [SerializeField] Image _UICorruption;
+    [SerializeField] Color _color;
 
     private void Start()
     {
@@ -20,6 +23,7 @@ public class CorruptBlock : MonoBehaviour
         if (col.collider == _colBlock)
         {
             _currupted = true;
+            _UICorruption.color = _color;
             Debug.Log(_currupted);
         }
     }
