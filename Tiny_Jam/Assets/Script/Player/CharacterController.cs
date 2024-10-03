@@ -56,7 +56,6 @@ public class CharacterController : MonoBehaviour
         _collider = GetComponent<Collider2D>();
     }
 
-
     private void Update()
     {
         HandleInputs();
@@ -74,7 +73,7 @@ public class CharacterController : MonoBehaviour
         {
             _animManager.PlayAnimation("player_run");
             Debug.Log("Anim Run");
-        }
+        } 
         else if (isJumping)
         { 
             _animManager.PlayAnimation("player_jump_up");
