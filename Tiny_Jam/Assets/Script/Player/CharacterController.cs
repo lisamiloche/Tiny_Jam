@@ -172,10 +172,10 @@ public class CharacterController : MonoBehaviour
         {
             position.y = bounds.min.y;
         }
-        else if (position.y > bounds.max.y)
+        /*else if (position.y > bounds.max.y)
         {
             position.y = bounds.max.y;
-        }
+        }*/
 
         transform.position = position;
     }
