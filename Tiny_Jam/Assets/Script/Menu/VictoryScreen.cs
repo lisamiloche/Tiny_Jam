@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,9 @@ public class VictoryScreen : MonoBehaviour
         _currentSceneName = "Level0";
         _index = 1;
         _victoryScreen.SetActive(false);
+
+        //AudioManager.Instance.PlayMusic(0, false);
+        //AudioManager.Instance.SetMusicVolume(1.2f);
     }
 
     public void ObClickMenu()

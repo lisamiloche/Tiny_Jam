@@ -27,10 +27,6 @@ public class CharacterController : MonoBehaviour
     [SerializeField] PhysicsMaterial2D _physicsFriction;
     [SerializeField] PhysicsMaterial2D _physicsNoFriction;
 
-
-    //private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
-    //private Vector3 normalScale = new Vector3(1, 0.5f, 1);
-
     Vector2 _inputs;
     bool _inputJump;
     Rigidbody2D _rb;
@@ -47,7 +43,7 @@ public class CharacterController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
 
-        AudioManager.Instance.PlayMusic(0,true); //TEST PTDDRRRRR VOUS VOUS ETES FAITS AVOIR HEIN !!!!
+        AudioManager.Instance.PlayMusic(0,true);
     }
 
     private void Update()
@@ -55,7 +51,7 @@ public class CharacterController : MonoBehaviour
         HandleInputs();
         CheckDirection();
     }
-
+     
     private void FixedUpdate()
     {
         HandleMovements();
