@@ -150,6 +150,10 @@ public class CharacterController : MonoBehaviour
                 _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
                 _timerNoJump = _timeMinBetweenJump;
                 isJumping = true;
+
+                AudioManager.Instance.PlaySFX(1);
+                AudioManager.Instance.SetSFXVolume(1.0f);
+
             }
         }
         else

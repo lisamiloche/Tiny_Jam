@@ -13,6 +13,10 @@ public class DefeatScreen : MonoBehaviour
     {
         _currentSceneName = "Level0";
         _defeatScreen.SetActive(false);
+
+        AudioManager.Instance.PlaySFX(4);
+        AudioManager.Instance.SetSFXVolume(1.0f);
+
     }
     public void ObClickMenu()
     {

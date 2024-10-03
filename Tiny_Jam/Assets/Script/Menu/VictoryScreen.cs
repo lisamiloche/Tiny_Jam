@@ -17,8 +17,8 @@ public class VictoryScreen : MonoBehaviour
         _index = 1;
         _victoryScreen.SetActive(false);
 
-        //AudioManager.Instance.PlayMusic(0, false);
-        //AudioManager.Instance.SetMusicVolume(1.2f);
+        AudioManager.Instance.PlaySFX(3);
+        AudioManager.Instance.SetSFXVolume(1.0f);
     }
 
     public void ObClickMenu()

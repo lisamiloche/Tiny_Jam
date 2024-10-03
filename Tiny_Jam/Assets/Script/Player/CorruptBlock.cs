@@ -25,6 +25,10 @@ public class CorruptBlock : MonoBehaviour
             _currupted = true;
             _UICorruption.color = _color;
             Debug.Log(_currupted);
+
+            AudioManager.Instance.PlaySFX(2);
+            AudioManager.Instance.SetSFXVolume(1.0f);
+
         }
     }
 }
