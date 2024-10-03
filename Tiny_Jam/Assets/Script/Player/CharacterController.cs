@@ -85,6 +85,7 @@ public class CharacterController : MonoBehaviour
         _isGrounded = currentGrounded;
     }
 
+
     void HandleJump()
     {
         _timerNoJump -= Time.deltaTime;

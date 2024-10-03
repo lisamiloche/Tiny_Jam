@@ -11,21 +11,26 @@ public class CollisionEchap : MonoBehaviour
 
     private VictoryScreen _vScreen;
     private Collider2D _colliderEchap;
+    CorruptBlock _corruptBlock;
     bool _win;
+    float _timerDuration = 1f;
+    float _startTime;
+
 
     void Start()
     {
         _colliderEchap = _echap.GetComponent<Collider2D>();
         _vScreen = _script.GetComponent<VictoryScreen>();
+        _corruptBlock = GetComponent<CorruptBlock>();
+        _startTime = Time.time;
     }
 
     void Update()
     {
-        if(_win)
+        if(_win && _corruptBlock._currupted == true)
         {
             _vScreen._victoryScreen.SetActive(true);
         }
-        
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -34,6 +39,13 @@ public class CollisionEchap : MonoBehaviour
         {
                 Debug.Log("Collision");
                 _win = true;
+            float elapsedTime = Time.time - _startTime;
+            float remainingTime = _timerDuration - elapsedTime;
+
+            if (remainingTime <= 0)
+            {
+                _win = false;
+            }
         }
     }
 }
