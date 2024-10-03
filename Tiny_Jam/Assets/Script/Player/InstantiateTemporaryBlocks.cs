@@ -67,8 +67,8 @@ public class InstantiateTemporaryBlocks : MonoBehaviour
 
                 _numberOfActiveBlocks++;
 
-                //AudioManager.Instance.PlayMusic(0, false);
-                //AudioManager.Instance.SetMusicVolume(1.2f);
+                AudioManager.Instance.PlaySFX(0);
+                AudioManager.Instance.SetSFXVolume(1.0f);
 
             }
         }
