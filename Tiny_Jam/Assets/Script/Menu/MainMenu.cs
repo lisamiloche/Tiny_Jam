@@ -16,12 +16,12 @@ public class MainMenu : MonoBehaviour
     }
     public void OnClickLV01()
     {
-        SceneManager.LoadScene("Lvl01");
+        SceneManager.LoadScene("Level01");
     }
 
     public void OnClickLV02()
     {
-        SceneManager.LoadScene("Lvl02");
+        SceneManager.LoadScene("Level02");
     }
 
     public void OnClickCredit()

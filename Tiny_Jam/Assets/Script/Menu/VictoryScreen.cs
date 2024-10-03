@@ -12,7 +12,7 @@ public class VictoryScreen : MonoBehaviour
 
     void Start()
     {
-        _currentSceneName = "Lvl0";
+        _currentSceneName = "Level0";
         _index = 1;
         _victoryScreen.SetActive(false);
     }

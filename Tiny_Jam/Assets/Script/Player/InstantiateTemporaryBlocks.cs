@@ -22,9 +22,6 @@ public class InstantiateTemporaryBlocks : MonoBehaviour
 
     CharacterController _characterController;
 
-    [Header("General Timer")]
-    [SerializeField] float _timerDuration;
-
     void Start()
     {
         _characterController = GetComponent<CharacterController>();

@@ -11,7 +11,7 @@ public class DefeatScreen : MonoBehaviour
 
     void Start()
     {
-        _currentSceneName = "Lvl0";
+        _currentSceneName = "Level0";
         _defeatScreen.SetActive(false);
     }
     public void ObClickMenu()
