@@ -43,7 +43,7 @@ public class Crouch : MonoBehaviour
     bool HeadDetecting()
     {
         bool hit = Physics2D.Raycast(_headCheck.position, Vector2.up, _headCheckLenght, _groundMask);
-        return hit;
+        return hit; 
     }
 
     private void OnDrawGizmos()

@@ -55,7 +55,7 @@ public class CharacterController : MonoBehaviour
         HandleInputs();
         CheckDirection();
     }
-
+     
     private void FixedUpdate()
     {
         HandleMovements();
