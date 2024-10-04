@@ -8,17 +8,20 @@ public class VictoryScreen : MonoBehaviour
 {
 
     string _currentSceneName;
-    int _index;
     [SerializeField] public GameObject _victoryScreen;
+    DefeatScreen _defeatScreen;
+    [SerializeField] GameObject _defeatSereen;
 
     void Start()
     {
         _currentSceneName = "Level0";
-        _index = 1;
+        _defeatScreen._index = 1;
         _victoryScreen.SetActive(false);
 
         AudioManager.Instance.PlaySFX(3);
         AudioManager.Instance.SetSFXVolume(1.0f);
+
+        _defeatScreen = _defeatSereen.GetComponent<DefeatScreen>();
     }
 
     public void ObClickMenu()
@@ -28,11 +31,11 @@ public class VictoryScreen : MonoBehaviour
 
     public void OnClickReload()
     {
-        SceneManager.LoadScene(_currentSceneName + _index);
+        SceneManager.LoadScene(_currentSceneName + _defeatScreen._index);
     }
 
     public void OnClickNext()
     {
-        SceneManager.LoadScene(_currentSceneName + (_index+1));
+        SceneManager.LoadScene(_currentSceneName + (_defeatScreen._index + 1));
     }
 }
