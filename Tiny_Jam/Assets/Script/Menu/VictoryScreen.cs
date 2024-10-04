@@ -18,8 +18,8 @@ public class VictoryScreen : MonoBehaviour
         _defeatScreen._index = 1;
         _victoryScreen.SetActive(false);
 
-        AudioManager.Instance.PlaySFX(3);
-        AudioManager.Instance.SetSFXVolume(1.0f);
+        //AudioManager.Instance.PlaySFX(3);
+        //AudioManager.Instance.SetSFXVolume(1.0f);
 
         _defeatScreen = _defeatSereen.GetComponent<DefeatScreen>();
     }

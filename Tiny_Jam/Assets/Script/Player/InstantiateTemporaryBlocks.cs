@@ -140,8 +140,8 @@ public class InstantiateTemporaryBlocks : MonoBehaviour
                     //ajouter message "vous ne pouvez pas créer de block"
                 }
 
-                AudioManager.Instance.PlaySFX(0);
-                AudioManager.Instance.SetSFXVolume(1.0f);
+                //AudioManager.Instance.PlaySFX(0);
+                //AudioManager.Instance.SetSFXVolume(1.0f);
 
             }
         }
