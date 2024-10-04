@@ -15,7 +15,6 @@ public class VictoryScreen : MonoBehaviour
     void Start()
     {
         _currentSceneName = "Level0";
-        _defeatScreen._index = 1;
         _victoryScreen.SetActive(false);
 
         //AudioManager.Instance.PlaySFX(3);

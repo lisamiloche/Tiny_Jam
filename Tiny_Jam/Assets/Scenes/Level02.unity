@@ -1323,7 +1323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5e34df9ca36a34b99af3b820edbe42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _index: 1
+  _index: 2
   _defeatScreen: {fileID: 1074670541}
 --- !u!114 &405868059
 MonoBehaviour:
