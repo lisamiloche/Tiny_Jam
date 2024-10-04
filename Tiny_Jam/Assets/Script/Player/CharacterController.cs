@@ -163,8 +163,8 @@ public class CharacterController : MonoBehaviour
                     isJumping = true;
                 }
 
-                AudioManager.Instance.PlaySFX(1);
-                AudioManager.Instance.SetSFXVolume(1.0f);
+                //AudioManager.Instance.PlaySFX(1);
+                //AudioManager.Instance.SetSFXVolume(1.0f);
 
             }
 

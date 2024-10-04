@@ -1,43 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Device;
 
 public class EnemyScript : MonoBehaviour
 {
-    bool _isCol = false;
-    [SerializeField] LayerMask _defaultMask;
-    [SerializeField] float _colRadius;
+    public bool isAttacking = false;
+    AnimManager _animManager;
+    [SerializeField] GameObject _player;
+    Collider2D _collider;
+    float _timerDuration = 10f;
+    float _startTime;
+
+    private void Awake()
+    {
+        _animManager = GetComponent<AnimManager>();
+        _collider = _player.GetComponent<Collider2D>();
+    }
+    private void Start()
+    {
+        _startTime = Time.time;
+    }
 
     private void Update()
     {
-        if (_isCol)
+        PlayAnimation();
+
+        if(isAttacking)
         {
-            // Jouer l'animation d'attaque de l'ennemi (voir en fonction de l'orientation)
+            float elapsedTime = Time.time - _startTime;
+            float remainingTime = _timerDuration - elapsedTime;
+
+            if (remainingTime <= 0)
+            {
+                isAttacking = false;
+            }
         }
     }
 
-    void CheckPlayer()
+    private void PlayAnimation()
     {
-        Collider2D[] _collidersPlayer = new Collider2D[2];
+        _animManager.SetBool("isAttacking", isAttacking);
 
-        if(transform.localScale == new Vector3 (1, 1, 1))
+        if (isAttacking)
         {
-            bool currentPlayer =
-            Physics2D.OverlapCircleNonAlloc(new Vector2(transform.position.x + 0.15f, transform.position.y - 0.25f), _colRadius, _collidersPlayer, _defaultMask) > 0;
-            _isCol = currentPlayer;
+            _animManager.PlayAnimation("enemy_attack");
         }
         else
         {
-            bool currentPlayer =
-            Physics2D.OverlapCircleNonAlloc(new Vector2(transform.position.x - 0.15f, transform.position.y - 0.25f), _colRadius, _collidersPlayer, _defaultMask) > 0;
-            _isCol = currentPlayer;
+            _animManager.PlayAnimation("enemy_idle");
         }
-        
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        Gizmos.DrawSphere(new Vector2(transform.position.x + 0.15f, transform.position.y - 0.25f), _colRadius);
+        var _colPlayer = _collider;
+
+        if (col== _colPlayer)
+        {
+            isAttacking = true;
+            Debug.Log("collision");
+        }
     }
 }

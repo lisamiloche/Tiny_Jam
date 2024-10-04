@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class DefeatScreen : MonoBehaviour
 {
     string _currentSceneName;
-    int _index = 1;
+    public int _index;
     [SerializeField] public GameObject _defeatScreen;
 
     void Start()

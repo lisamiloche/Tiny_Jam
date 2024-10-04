@@ -10,20 +10,27 @@ public class MortalBlocks : MonoBehaviour
     [SerializeField] GameObject _script;
     DefeatScreen _screen;
 
+    float _timerDuration = 3f;
+    float _startTime;
+
     void Start()
     {
         _screen = _script.GetComponent<DefeatScreen>();
+        _startTime = Time.time;
     }
 
     void Update()
     {
         if (_isDeath)
         {
-            //Instantiate(VFXDeath, position, rotation);
-            //PlayAnimDeath
-            //Delais
-            _screen._defeatScreen.SetActive(true);
-            Destroy(gameObject); // à changer
+            float elapsedTime = Time.time - _startTime;
+            float remainingTime = _timerDuration - elapsedTime;
+
+            if (remainingTime <= 0)
+            {
+                _screen._defeatScreen.SetActive(true);
+                Destroy(gameObject);
+            }        
         }
     }
 
@@ -35,7 +42,6 @@ public class MortalBlocks : MonoBehaviour
 
             if (col.collider == _colBlock)
             {
-                //Debug.Log("Collision");
                 _isDeath = true;
             }
         }

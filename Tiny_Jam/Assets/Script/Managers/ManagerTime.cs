@@ -17,7 +17,7 @@ public class ManagerTime : MonoBehaviour
         _textGeneralTimer = _generalTimer.GetComponent<TMP_Text>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         float elapsedTime = Time.time - _startTime;
