@@ -5,10 +5,9 @@ using UnityEngine;
 public class DestroyTemporaryBlocks : MonoBehaviour
 {
     [Header("Timer Before Destroy")]
-    [SerializeField] float _timerDuration;
+    [SerializeField] public float _timerDuration;
 
     float _startTime;
-    public bool _isDestroyed = false;
     GameObject _player;
     InstantiateTemporaryBlocks _instantiateBlocks;
 
@@ -27,6 +26,7 @@ public class DestroyTemporaryBlocks : MonoBehaviour
         if (remainingTime <= 0)
         {
             _instantiateBlocks._numberOfActiveBlocks--;
+            _instantiateBlocks.UpdateRemainingTimes();
             Destroy(gameObject);
         }
     }

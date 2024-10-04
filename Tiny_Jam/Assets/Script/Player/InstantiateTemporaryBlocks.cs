@@ -5,6 +5,7 @@ using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InstantiateTemporaryBlocks : MonoBehaviour
 {
@@ -17,18 +18,24 @@ public class InstantiateTemporaryBlocks : MonoBehaviour
     [SerializeField] int _numberMaxOfBlocks;
     [SerializeField] float _blockSize;
     public int _numberOfActiveBlocks = 0;
+    [SerializeField] float _checkRadius;
+    [SerializeField] LayerMask _groundLayer;
 
     [Header("UI Blocks")]
     [SerializeField] Image _block01;
     [SerializeField] Image _block02;
+    [SerializeField] TextMeshProUGUI _textBlock01;
+    [SerializeField] TextMeshProUGUI _textBlock02;
+
 
     CharacterController _characterController;
     bool _isBlocksRight = false;
     bool _isBlocksLeft = false;
-    [SerializeField] float _checkRadius;
-    [SerializeField] LayerMask _groundLayer;
     public Vector2 _boxSize = new Vector2(0.00000001f, 0.00000001f);
     BoxCollider2D _temporaryBlockCollider;
+
+    List<float> _remainingTimes = new List<float>();
+
 
     void Start()
     {
@@ -40,6 +47,7 @@ public class InstantiateTemporaryBlocks : MonoBehaviour
     void Update()
     {
         Spawner();
+        UpdateRemainingTimes();
         ManageUIBlocks();
         _isBlocksRight = CheckBlocksRight();
         _isBlocksLeft = CheckBlocksLeft();
@@ -51,16 +59,57 @@ public class InstantiateTemporaryBlocks : MonoBehaviour
         {
             _block01.color = Color.white;
             _block02.color = Color.grey;
+
+            if(_remainingTimes.Count > 0)
+                _textBlock01.text = FormatTimer(_remainingTimes[0]);
+            else
+                _textBlock01.text = "E";
+
+            _textBlock02.text = "E";
         }
         else if (_numberOfActiveBlocks == 2)
         {
             _block01.color = Color.white;
             _block02.color = Color.white;
+
+            if (_remainingTimes.Count > 0)
+                _textBlock01.text = FormatTimer(_remainingTimes[0]);
+            else
+                _textBlock01.text = "E";
+
+            if (_remainingTimes.Count > 1)
+                _textBlock02.text = FormatTimer(_remainingTimes[1]);
+            else
+                _textBlock02.text = "E";
         }
         else
         {
             _block01.color = Color.grey;
             _block02.color = Color.grey;
+            _textBlock01.text = "E";
+            _textBlock02.text = "E";
+        }
+    }
+
+    string FormatTimer(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    public void UpdateRemainingTimes()
+    {
+        for (int i = _remainingTimes.Count - 1; i >= 0; i--)
+        {
+            if (_remainingTimes[i] > 0)
+            {
+                _remainingTimes[i] -= Time.deltaTime;
+            }
+            else
+            {
+                _remainingTimes.RemoveAt(i);
+            }
         }
     }
 
@@ -70,14 +119,20 @@ public class InstantiateTemporaryBlocks : MonoBehaviour
         {
             if (_numberOfActiveBlocks < _numberMaxOfBlocks)
             {
+                GameObject block = null;
                 if (_characterController._isLookingRight && !_isBlocksRight)
                 {
-                    Instantiate(_temporaryBlock, new Vector2(transform.position.x + _blockSize, transform.position.y + _blockSize / 2), Quaternion.identity);
-                    _numberOfActiveBlocks++;
+                    block = Instantiate(_temporaryBlock, new Vector2(transform.position.x + _blockSize, transform.position.y + _blockSize / 2), Quaternion.identity);
                 }
                 else if (!_characterController._isLookingRight && !_isBlocksLeft)
                 {
-                    Instantiate(_temporaryBlock, new Vector2(transform.position.x - _blockSize, transform.position.y + _blockSize / 2), Quaternion.identity);
+                    block = Instantiate(_temporaryBlock, new Vector2(transform.position.x - _blockSize, transform.position.y + _blockSize / 2), Quaternion.identity);
+                }
+
+                if(block != null)
+                {
+                    float timerDuration = block.GetComponent<DestroyTemporaryBlocks>()._timerDuration;
+                    _remainingTimes.Add(timerDuration);
                     _numberOfActiveBlocks++;
                 }
                 else
