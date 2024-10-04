@@ -42,8 +42,10 @@ public class CharacterController : MonoBehaviour
 
     public bool isRunning = false;
     public bool isJumping = false;
-    public bool isFalling = false;
-    
+    public bool _isFalling = false;
+    bool _isIdle = true;
+
+
     private void Awake()
     {
         _animManager = GetComponent<AnimManager>();
@@ -61,12 +63,16 @@ public class CharacterController : MonoBehaviour
         HandleInputs();
         CheckDirection();
         PlayAnimation();
+
+        if(_isLookingRight)
+            transform.localScale = new Vector3(1, 1, 1);
+        else
+            transform.localScale = new Vector3(-1, 1, 1);
     }
 
     private void PlayAnimation()
     {
         _animManager.SetBool("isJumping", isJumping);
-        _animManager.SetBool("isFalling", isFalling);
         _animManager.SetBool("isRunning", isRunning);
 
         if (isRunning)
@@ -77,14 +83,16 @@ public class CharacterController : MonoBehaviour
         { 
             _animManager.PlayAnimation("player_jump_up");
         }
-        else if (isFalling)
+        else if (_isFalling)
         {
+            _isIdle = false;
             _animManager.PlayAnimation("player_jump_down");
         }
-        else
+        else if (_isGrounded && _isIdle && !_isFalling)
         {
             _animManager.PlayAnimation("player_idle");
         }
+        
     }
 
     private void FixedUpdate()
@@ -114,9 +122,11 @@ public class CharacterController : MonoBehaviour
             
             if(_isGrounded)
                 isRunning = true;
+                _isIdle = false;
         }
         else
             isRunning = false;
+            _isIdle = true;
         
     }
 
@@ -137,7 +147,8 @@ public class CharacterController : MonoBehaviour
         if (_isGrounded)
         {
             isJumping = false;
-            isFalling = false;
+            _isFalling = false;
+            _isIdle = false;
 
             if (_inputJump && _rb.velocity.y <= 0 && _timerNoJump <= 0)
             {
@@ -145,23 +156,33 @@ public class CharacterController : MonoBehaviour
                 _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
                 _timerNoJump = _timeMinBetweenJump;
                 isJumping = true;
+                _isIdle = false;
 
                 AudioManager.Instance.PlaySFX(1);
                 AudioManager.Instance.SetSFXVolume(1.0f);
 
+            }
+
+            if (_rb.velocity.y < 0)
+            {
+                _isFalling = true;
+                isJumping = false;
+                _isIdle = false;
             }
         }
         else
         {
             if (_rb.velocity.y < 0)
             {
-                Debug.Log("On retombe");
-                isFalling = true;
+                _isFalling = false;
+                isJumping = true;
+                _isIdle = false;
             }
             else if (_rb.velocity.y > 0)
             {
                 isJumping = true;
-                isFalling = false;
+                _isFalling = false;
+                _isIdle = false;
             }
         }
 
@@ -217,9 +238,14 @@ public class CharacterController : MonoBehaviour
         else if (_inputs.x == 0)
         {
             if (_checkDirection.x > 0)
+            {
                 _isLookingRight = true;
+            }
             else
+            {
                 _isLookingRight = false;
+            }
+                
         }
     }
 
