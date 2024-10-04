@@ -155,8 +155,13 @@ public class CharacterController : MonoBehaviour
                 Debug.Log("On saute");
                 _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
                 _timerNoJump = _timeMinBetweenJump;
-                isJumping = true;
-                _isIdle = false;
+
+                if(_inputJump && !_isOnSlope)
+                {
+                    _isFalling = false;
+                    _isIdle = false;
+                    isJumping = true;
+                }
 
                 AudioManager.Instance.PlaySFX(1);
                 AudioManager.Instance.SetSFXVolume(1.0f);
@@ -165,24 +170,33 @@ public class CharacterController : MonoBehaviour
 
             if (_rb.velocity.y < 0)
             {
-                _isFalling = true;
-                isJumping = false;
-                _isIdle = false;
+                if (!_isOnSlope)
+                {
+                    _isFalling = true;
+                    isJumping = false;
+                    _isIdle = false;
+                }
             }
         }
         else
         {
-            if (_rb.velocity.y < 0)
+            if (_inputJump && _rb.velocity.y < 0)
             {
-                _isFalling = false;
-                isJumping = true;
-                _isIdle = false;
+                if (!_isOnSlope)
+                {
+                    _isFalling = false;
+                    isJumping = true;
+                    _isIdle = false;
+                }
             }
-            else if (_rb.velocity.y > 0)
+            else if (_inputJump && _rb.velocity.y > 0)
             {
-                isJumping = true;
-                _isFalling = false;
-                _isIdle = false;
+                if (!_isOnSlope)
+                {
+                    isJumping = true;
+                    _isFalling = false;
+                    _isIdle = false;
+                }
             }
         }
 
